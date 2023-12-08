@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  stauts: '',
+  status: '',
   error: '',
   user: {
     id: '',
@@ -18,7 +18,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.stauts = '';
+      state.status = '';
       state.error = '';
       state.user = {
         id: '',
