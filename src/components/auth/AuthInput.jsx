@@ -6,15 +6,15 @@ export default function AuthInput({
   error,
 }) {
   return (
-    <div className="mt-8 content-center dark:text-dark_text_1 space-y-1">
+    <div className=" dark:text-dark_text_1 ">
       <label className="text-sm font-bold tracking-wide">{placeholder}</label>
       <input
-        className="w-full dark:bg-dark_bg_3 text-base py-2 px-4 rounded-lg outline-none"
+        className="w-full dark:bg-dark_bg_3 text-base p-2  rounded-lg outline-none"
         type={type}
         placeholder={placeholder}
         {...register(name)}
       ></input>
-      {error && <p className="text-red-400">{error}</p>}
+      {error && <p className="text-red-400 max-h-1">{error}</p>}
     </div>
   );
 }
