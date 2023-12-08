@@ -6,10 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PulseLoader } from 'react-spinners';
 import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../../features/userSlice.js';
+import { useState } from 'react';
+import Picture from './Picture.jsx';
 export default function RegisterForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { status, error } = useSelector((state) => state.user);
+  const [picture, setPicture] = useState();
+  const [readablePicture, setReadablePicture] = useState('');
   const {
     register,
     handleSubmit,
@@ -25,7 +29,7 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className=" h-screen w-full flex items-center justify-center m-auto overflow-hidden">
+    <div className=" min-h-screen w-full flex items-center justify-center m-auto overflow-hidden">
       <div className="  space-y-8 rounded-xl px-8 dark:bg-dark_bg_2 md:max-w-lg lg:max-w-xl xl:max-w-2xl">
         <div className="text-center dark: text-dark_text_1">
           <h2 className="mt-6 text-3xl font-bold">Welcome</h2>
@@ -61,6 +65,11 @@ export default function RegisterForm() {
             register={register}
             error={errors?.password?.message}
           />
+          <Picture
+            readablePicture={readablePicture}
+            setPicture={setPicture}
+            setReadablePicture={setReadablePicture}
+          ></Picture>
           {error ? (
             <div>
               <p className="text-red-400"> {error}</p>
