@@ -28,6 +28,20 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const loginUser = createAsyncThunk(
+  'auth/login',
+  async (values, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`${AUTH_END_POINT}/login`, {
+        ...values,
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error.message);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -44,6 +58,9 @@ export const userSlice = createSlice({
         token: '',
       };
     },
+    changeStatus: (state, action) => {
+      state.status = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -57,9 +74,20 @@ export const userSlice = createSlice({
       .addCase(registerUser.rejected, (state, { payload }) => {
         state.status = 'failed';
         state.error = payload;
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(loginUser.fulfilled, (state, { payload }) => {
+        state.status = 'success';
+        state.user = payload.user;
+      })
+      .addCase(loginUser.rejected, (state, { payload }) => {
+        state.status = 'failed';
+        state.error = payload;
       });
   },
 });
 
-export const { logout } = userSlice.actions;
+export const { logout, changeStatus } = userSlice.actions;
 export default userSlice.reducer;
