@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 const AUTH_END_POINT = `${process.env.REACT_APP_API_ENDPOINT}/auth`;
 const initialState = {
-  status: 'initial',
+  status: '',
   error: '',
   user: {
     id: '',
