@@ -1,6 +1,7 @@
+import { dateHanlder } from '../../../utils/date';
 export default function Conversation({ convo }) {
   return (
-    <li className="list-none h-[72px] w-full dark:bg-dark_bg_1 hover:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]">
+    <li className="list-none h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]">
       <div className="relative w-full flex items-center justify-between py-[10px]">
         {/*left*/}
         <div className="flex items-center gap-x-3">
@@ -25,7 +26,13 @@ export default function Conversation({ convo }) {
             </div>
           </div>
         </div>
+        <div className="flex flex-col gap-y-4 items-end text-xs">
+          <span className="dark:text-dark_text_2">
+            {dateHanlder(convo.latestMessage.createdAt)}
+          </span>
+        </div>
       </div>
+      <div className="ml-16 border-b dark:border-b-dark_border_1"></div>
     </li>
   );
 }
