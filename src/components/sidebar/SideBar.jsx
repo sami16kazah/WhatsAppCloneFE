@@ -6,7 +6,7 @@ import Conversations from './converstions/Conversations';
 import SearchResults from './search/SearchResults';
 export default function SideBar() {
   const [searchResult, setSearchResults] = useState([]);
-  console.log(searchResult);
+
   return (
     <div className="w-[40%] h-full select-none">
       <SideBarHeader></SideBarHeader>
