@@ -4,7 +4,11 @@
 
 @layer components {
   .container {
-    @apply w-[1700px] h-full;
+    width: calc(100% - 38px);
+    max-width: 1600px;
+  }
+  .flex0030 {
+    flex: 0 0 30%;
   }
   .btn {
     @apply w-[40px] h-[40px] rounded-full flex items-center justify-center active:bg-dark_hover_1;
@@ -29,6 +33,29 @@
     height: calc(100vh-220px);
     overflow-y: auto;
     overflow-x: hidden;
+  }
+  .overflow_scrollbar {
+    height: calc(100vh - 155px);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
+.epr-body::-webkit-scrollbar {
+  width: 6px !important;
+}
+.epr-body::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+.epr-body::-webkit-scrollbar-thumb {
+  background: #444e54 !important;
+}
+.openEmojiAnimation {
+  animation: openAn 0.1s forwards;
+}
+@keyframes openAn {
+  0% {
+    transform: translateY(60px);
   }
 }
 

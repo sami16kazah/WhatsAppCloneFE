@@ -3,6 +3,7 @@ import { SideBar } from '../components/sidebar';
 import { useEffect } from 'react';
 import { getConversations } from '../features/chatSlice';
 import WhatsAppHome from '../components/chat/WhatsAppHome';
+import ChatContainer from '../components/chat/ChatContainer';
 export default function Home() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
@@ -15,10 +16,14 @@ export default function Home() {
   }, [user]);
 
   return (
-    <div className="min-h-screen dark:bg-dark_bg_1 flex items-center justify-center py-[19px] overflow-hidden">
-      <div className="container min-h-screen flex">
+    <div className="max-h-full dark:bg-dark_bg_1 flex items-center justify-center py-[19px] overflow-hidden">
+      <div className="container max-h-full flex">
         <SideBar></SideBar>
-        {activeConversation._id ? 'home' : <WhatsAppHome></WhatsAppHome>}
+        {activeConversation._id ? (
+          <ChatContainer />
+        ) : (
+          <WhatsAppHome></WhatsAppHome>
+        )}
       </div>
     </div>
   );

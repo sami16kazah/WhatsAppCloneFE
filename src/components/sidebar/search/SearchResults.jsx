@@ -1,5 +1,5 @@
 import Contact from './Contact';
-export default function SearchResults({ searchResult }) {
+export default function SearchResults({ searchResult, setSearchResults }) {
   return (
     <div className="w-full convos scrollbar">
       <div className="flex flex-col px-8 pt-8">
@@ -9,7 +9,11 @@ export default function SearchResults({ searchResult }) {
       <ul>
         {searchResult &&
           searchResult.map((user) => (
-            <Contact contact={user} key={user._id}></Contact>
+            <Contact
+              contact={user}
+              key={user._id}
+              setSearchResults={setSearchResults}
+            ></Contact>
           ))}
       </ul>
     </div>
