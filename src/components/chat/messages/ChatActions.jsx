@@ -6,8 +6,9 @@ import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendMessage } from '../../../features/chatSlice';
 import { ClipLoader } from 'react-spinners';
-import { toBeRequired } from '@testing-library/jest-dom/dist/matchers';
-export default function ChatActions() {
+import SocketContext from '../../../context/SocketContext';
+
+function ChatActions({ socket }) {
   const dispatch = useDispatch();
   const [message, setMessage] = useState('');
   const { activeConversation, status } = useSelector((state) => state.chat);
@@ -15,6 +16,7 @@ export default function ChatActions() {
   const [showPicker, setShowPicker] = useState(false);
   const [showAttachments, setShowAttachments] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const textRef = useRef();
   const values = {
     message,
@@ -25,7 +27,8 @@ export default function ChatActions() {
   const sendMessageHandler = async (e) => {
     setLoading(true);
     e.preventDefault();
-    await dispatch(sendMessage(values));
+    let newMessage = await dispatch(sendMessage(values));
+    socket.emit('send message', newMessage.payload);
     setMessage('');
     setLoading(false);
   };
@@ -66,3 +69,10 @@ export default function ChatActions() {
     </form>
   );
 }
+
+const ChatWithContext = (props) => (
+  <SocketContext.Consumer>
+    {(socket) => <ChatActions {...props} socket={socket}></ChatActions>}
+  </SocketContext.Consumer>
+);
+export default ChatWithContext;

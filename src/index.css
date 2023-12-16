@@ -7,6 +7,9 @@
     width: calc(100% - 38px);
     max-width: 1600px;
   }
+  .online {
+    @apply border-[2.5px] border-green-400 border-solid;
+  }
   .flex0030 {
     flex: 0 0 30%;
   }

@@ -4,7 +4,7 @@ import Notifications from './notifications/Notifications';
 import Search from './search/Search';
 import Conversations from './converstions/Conversations';
 import SearchResults from './search/SearchResults';
-export default function SideBar() {
+export default function SideBar({ onlineUsers, typing }) {
   const [searchResult, setSearchResults] = useState([]);
 
   return (
@@ -21,7 +21,10 @@ export default function SideBar() {
           setSearchResults={setSearchResults}
         ></SearchResults>
       ) : (
-        <Conversations></Conversations>
+        <Conversations
+          onlineUsers={onlineUsers}
+          typing={typing}
+        ></Conversations>
       )}
     </div>
   );

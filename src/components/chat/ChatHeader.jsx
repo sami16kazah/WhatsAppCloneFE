@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { DotsIcon, SearchLargeIcon } from '../../svg';
 import { Capitalize } from '../../utils/string';
-export default function ChatHeader() {
+export default function ChatHeader({ onlineUsers }) {
   const { activeConversation } = useSelector((state) => state.chat);
   const { name, picture } = activeConversation;
   return (
@@ -12,14 +12,18 @@ export default function ChatHeader() {
             <img
               src={picture}
               alt={name}
-              className="w-full h-full rounded-full object-cover"
+              className={`w-full h-full rounded-full object-cover ${
+                onlineUsers ? 'online' : ''
+              }`}
             ></img>
           </button>
           <div className="flex flex-col">
             <h1 className="dark:text-white text-md font-bold">
               {Capitalize(name.split(' ')[0])}
             </h1>
-            <span className="text-xs dark:text-dark_text_2">online</span>
+            <span className="text-xs dark:text-dark_text_2">
+              {onlineUsers ? 'online' : null}
+            </span>
           </div>
         </div>
         <ul className="flex items-center gap-x-2.5">

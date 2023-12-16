@@ -1,8 +1,9 @@
 import { useSelector } from 'react-redux';
 import Message from './Message';
 import { useEffect, useRef } from 'react';
-export default function ChatMessages() {
-  const { messages } = useSelector((state) => state.chat);
+import { BeatLoader } from 'react-spinners';
+export default function ChatMessages({ typing }) {
+  const { messages, activeConversation } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
   const endRef = useRef();
   useEffect(() => {
@@ -23,6 +24,9 @@ export default function ChatMessages() {
               me={user._id === msg.sender._id}
             />
           ))}
+        <p className="text-dark_text_1 mb-1">
+          {typing === activeConversation._id ? 'typing ...' : ''}
+        </p>
         <div ref={endRef} className="mt-2"></div>
       </div>
     </div>
