@@ -11,6 +11,19 @@ function Home({ socket }) {
   const { activeConversation } = useSelector((state) => state.chat);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [typing, setTyping] = useState('false');
+  const displayNotification = (message) => {
+    if ('serviceWorker' in navigator) {
+      var options = {
+        body: message.message,
+        icon: '../../../logo192.png',
+        image: message.sender.picture,
+        dir: 'ltr',
+      };
+      navigator.serviceWorker.ready.then((swreg) => {
+        swreg.showNotification(message.sender.name, options);
+      });
+    }
+  };
   useEffect(() => {
     socket.emit('join', user._id);
     socket.on('get-online-users', (users) => {
@@ -26,8 +39,11 @@ function Home({ socket }) {
   }, [user]);
 
   useEffect(() => {
-    socket.on('receive message', (message) => {
-      dispatch(updateMessaages(message));
+    socket.on('receive message', async (message) => {
+      await dispatch(updateMessaages(message));
+      if (message?.sender._id !== user._id) {
+        displayNotification(message);
+      }
     });
   }, []);
 
