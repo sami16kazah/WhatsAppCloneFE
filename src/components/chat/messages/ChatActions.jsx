@@ -25,8 +25,13 @@ function ChatActions({ socket }) {
     token: user.token,
   };
   const sendMessageHandler = async (e) => {
-    setLoading(true);
     e.preventDefault();
+    let msg = values.message;
+    msg = msg.trim();
+    if (msg.length === 0) {
+      return;
+    }
+    setLoading(true);
     let newMessage = await dispatch(sendMessage(values));
     socket.emit('send message', newMessage.payload);
     setMessage('');

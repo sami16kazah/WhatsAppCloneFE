@@ -8,7 +8,7 @@ import SocketContext from '../context/SocketContext';
 function Home({ socket }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const { activeConversation } = useSelector((state) => state.chat);
+  const { activeConversation, message } = useSelector((state) => state.chat);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [typing, setTyping] = useState('false');
   const displayNotification = (message) => {
@@ -41,11 +41,18 @@ function Home({ socket }) {
   useEffect(() => {
     socket.on('receive message', async (message) => {
       await dispatch(updateMessaages(message));
-      if (message?.sender._id !== user._id) {
+      console.log(message.conversation._id, activeConversation._id);
+      if (
+        message._id &&
+        activeConversation._id !== undefined &&
+        message.sender._id !== user._id &&
+        message.conversation._id !== activeConversation._id
+      ) {
+        console.log(message.conversation._id, activeConversation._id);
         displayNotification(message);
       }
     });
-  }, []);
+  }, [message, activeConversation, user]);
 
   useEffect(() => {
     socket.on('typing', (conversation) => {
