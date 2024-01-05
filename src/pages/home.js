@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { SideBar } from '../components/sidebar';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getConversations, updateMessaages } from '../features/chatSlice';
 import WhatsAppHome from '../components/chat/WhatsAppHome';
 import ChatContainer from '../components/chat/ChatContainer';
@@ -9,21 +9,36 @@ function Home({ socket }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const { activeConversation, message } = useSelector((state) => state.chat);
+  const activeConversationRef = useRef();
+  activeConversationRef.current = activeConversation;
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [typing, setTyping] = useState('false');
+  let reg;
+
   const displayNotification = (message) => {
-    if ('serviceWorker' in navigator) {
-      var options = {
-        body: message.message,
-        icon: '../../../logo192.png',
-        image: message.sender.picture,
-        dir: 'ltr',
-      };
-      navigator.serviceWorker.ready.then((swreg) => {
-        swreg.showNotification(message.sender.name, options);
-      });
-    }
+    Notification.requestPermission().then((status) => {
+      if (status === 'granted') {
+        // permission granted, show notification
+        if ('serviceWorker' in navigator) {
+          var options = {
+            body: message.message,
+            icon: '../../../logo192.png',
+            image: message.sender.picture,
+            dir: 'ltr',
+            vibrate: [100, 50, 200],
+            badge: '../../../logo192.png',
+          };
+          navigator.serviceWorker.ready.then((swreg) => {
+            swreg.showNotification(message.sender.name, options);
+          });
+        }
+      } else {
+        // permission denied or default, do nothing
+        console.log('Notification permission status:', status);
+      }
+    });
   };
+
   useEffect(() => {
     socket.emit('join', user._id);
     socket.on('get-online-users', (users) => {
@@ -41,18 +56,21 @@ function Home({ socket }) {
   useEffect(() => {
     socket.on('receive message', async (message) => {
       await dispatch(updateMessaages(message));
-      console.log(message.conversation._id, activeConversation._id);
+      console.log(message.conversation._id, activeConversationRef.current._id);
       if (
         message._id &&
-        activeConversation._id !== undefined &&
+        //activeConversationRef.current._id !== undefined &&
         message.sender._id !== user._id &&
-        message.conversation._id !== activeConversation._id
+        message.conversation._id !== activeConversationRef.current._id
       ) {
-        console.log(message.conversation._id, activeConversation._id);
+        console.log(
+          message.conversation._id,
+          activeConversationRef.current._id
+        );
         displayNotification(message);
       }
     });
-  }, [message, activeConversation, user]);
+  }, []);
 
   useEffect(() => {
     socket.on('typing', (conversation) => {

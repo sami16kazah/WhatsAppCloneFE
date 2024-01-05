@@ -42,6 +42,21 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
+  ::-webkit-scrollbar {
+    width: 6px !important;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #444e54 !important;
+  }
+  .hview {
+    height: calc(100vh - 280px);
+  }
+  .fileThumbNail:hover .removeFileIcon {
+    display: block;
+  }
 }
 
 .epr-body::-webkit-scrollbar {

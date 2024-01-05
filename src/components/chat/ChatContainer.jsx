@@ -5,10 +5,11 @@ import { useEffect } from 'react';
 import { getConversationMessages } from '../../features/chatSlice';
 import ChatActions from './messages/ChatActions';
 import { getConversationId } from '../../utils/chat';
+import FilePreview from './preview/files/FilePreview';
 
 export default function ChatContainer({ onlineUsers, typing }) {
   const dispatch = useDispatch();
-  const { activeConversation, messages } = useSelector((state) => state.chat);
+  const { activeConversation, files } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
   const values = {
     token: user.token,
@@ -31,8 +32,14 @@ export default function ChatContainer({ onlineUsers, typing }) {
               : false
           )}
         ></ChatHeader>
-        <ChatMessages typing={typing}></ChatMessages>
-        <ChatActions></ChatActions>
+        {files.length > 0 ? (
+          <FilePreview />
+        ) : (
+          <>
+            <ChatMessages typing={typing}></ChatMessages>
+            <ChatActions></ChatActions>
+          </>
+        )}
       </div>
     </div>
   );

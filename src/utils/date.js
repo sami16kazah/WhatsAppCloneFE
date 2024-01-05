@@ -9,7 +9,7 @@ export const dateHanlder = (date) => {
     if (Number(days) < 8) {
       return now.subtract(Number(days), 'days').format('dddd');
     } else {
-      return momentDate.format('DD/MM/YYY');
+      return momentDate.format('DD/MM/YYYY');
     }
   };
   if (time === 'a few seconds') {
