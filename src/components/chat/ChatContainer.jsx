@@ -6,7 +6,7 @@ import { getConversationMessages } from '../../features/chatSlice';
 import ChatActions from './messages/ChatActions';
 import { getConversationId } from '../../utils/chat';
 
-export default function ChatContainer({ onlineUsers, typing }) {
+export default function ChatContainer({ onlineUsers, typing, callUser }) {
   const dispatch = useDispatch();
   const { activeConversation, messages } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
@@ -30,6 +30,7 @@ export default function ChatContainer({ onlineUsers, typing }) {
               ? true
               : false
           )}
+          callUser={callUser}
         ></ChatHeader>
         <ChatMessages typing={typing}></ChatMessages>
         <ChatActions></ChatActions>

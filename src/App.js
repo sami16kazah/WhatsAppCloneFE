@@ -10,6 +10,7 @@ import Register from './pages/register';
 import { useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
 import SocketContext from './context/SocketContext';
+
 const socket = io(process.env.REACT_APP_API_ENDPOINT_SOCKET);
 function App() {
   const { user } = useSelector((state) => state.user);

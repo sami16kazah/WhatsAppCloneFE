@@ -25,13 +25,13 @@ export default function ChatMessages({ typing }) {
               me={user._id === msg.sender._id}
             />
           ))}
-        <p className="text-dark_text_1 mb-4">
-          {typing === activeConversation._id ? (
-            <Typing message="typing ... "></Typing>
-          ) : (
-            ''
-          )}
-        </p>
+
+        {typing === activeConversation._id ? (
+          <Typing message="typing ... "></Typing>
+        ) : (
+          ''
+        )}
+
         <div ref={endRef} className="mt-2"></div>
       </div>
     </div>

@@ -16,6 +16,9 @@
   .btn {
     @apply w-[40px] h-[40px] rounded-full flex items-center justify-center active:bg-dark_hover_1;
   }
+  .btn-secondery {
+    @apply w-[45px] h-[45px] rounded-full flex items-center justify-center bg-dark_bg_2;
+  }
   .p16 {
     @apply px-[16px];
   }
@@ -41,6 +44,15 @@
     height: calc(100vh - 155px);
     overflow-y: auto;
     overflow-x: hidden;
+  }
+  ::-webkit-scrollbar {
+    width: 6px !important;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #444e54 !important;
   }
 }
 
@@ -81,4 +93,27 @@
 }
 .scrollbar::-webkit-scrollbar-thumb {
   background: #444e54;
+}
+
+.callbg {
+  background-image: linear-gradient(black, black),
+    url('https://res.cloudinary.com/depeo6txz/image/upload/v1702897817/uda9fdsziihit4o6ndes.png');
+  background-size: cover;
+  background-blend-mode: saturation;
+}
+
+.largeVideoCall {
+  @apply absolute top-0 bottom-0 left-0 right-0 z-20 object-cover h-full bg-red-400 cursor-pointer;
+}
+
+.smallVideoCall {
+  @apply w-28 h-32 object-cover absolute  bottom-4  right-2 z-30  bg-blue-500 cursor-pointer rounded-lg;
+}
+
+.moveVideo {
+  @apply bottom-32 transition-all duration-100;
+}
+
+.moveActionComp {
+  @apply block;
 }

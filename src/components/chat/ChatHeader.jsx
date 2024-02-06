@@ -1,7 +1,9 @@
 import { useSelector } from 'react-redux';
-import { DotsIcon, SearchLargeIcon } from '../../svg';
+import { DotsIcon, MuteIcon, NoVideoIcon, SearchLargeIcon } from '../../svg';
 import { Capitalize } from '../../utils/string';
-export default function ChatHeader({ onlineUsers }) {
+import { getConversationName, getConversationPicture } from '../../utils/chat';
+export default function ChatHeader({ onlineUsers, callUser }) {
+  const { user } = useSelector((state) => state.user);
   const { activeConversation } = useSelector((state) => state.chat);
   const { name, picture } = activeConversation;
   return (
@@ -10,7 +12,7 @@ export default function ChatHeader({ onlineUsers }) {
         <div className="flex items-center gap-x-4">
           <button className="btn">
             <img
-              src={picture}
+              src={getConversationPicture(user, activeConversation.users)}
               alt={name}
               className={`w-full h-full rounded-full object-cover ${
                 onlineUsers ? 'online' : ''
@@ -19,7 +21,7 @@ export default function ChatHeader({ onlineUsers }) {
           </button>
           <div className="flex flex-col">
             <h1 className="dark:text-white text-md font-bold">
-              {Capitalize(name.split(' ')[0])}
+              {Capitalize(getConversationName(user, activeConversation.users))}
             </h1>
             <span className="text-xs dark:text-dark_text_2">
               {onlineUsers ? 'online' : null}
@@ -27,6 +29,11 @@ export default function ChatHeader({ onlineUsers }) {
           </div>
         </div>
         <ul className="flex items-center gap-x-2.5">
+          <li>
+            <button className="btn" onClick={() => callUser()}>
+              <NoVideoIcon className="dark:fill-dark_svg_1"></NoVideoIcon>
+            </button>
+          </li>
           <li>
             <button className="btn">
               <SearchLargeIcon className="dark:fill-dark_svg_1"></SearchLargeIcon>
